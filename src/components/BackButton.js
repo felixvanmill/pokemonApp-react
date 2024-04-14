@@ -1,15 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const BackButton = ({ style, className }) => {
+const BackButton = () => {
     const navigate = useNavigate();
 
     return (
-        <button
-            onClick={() => navigate(-1)}
-            style={style}
-            className={className}>
-            Go Back
+        <button onClick={() => navigate(-1)} className="back-button" aria-label="Go back">
+            <FontAwesomeIcon icon={faArrowLeft} />
         </button>
     );
 };

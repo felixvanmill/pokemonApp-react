@@ -1,0 +1,29 @@
+/* Styles for the Navbar using Flexbox */
+nav {
+    background-color: #f8f8f8; /* Light grey background */
+    padding: 10px 20px; /* Padding around the navigation */
+    display: flex; /* Enable Flexbox */
+    justify-content: center; /* Center the items horizontally */
+    align-items: center; /* Align items vertically in the center */
+}
+
+nav ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Enable Flexbox for the list */
+    margin: 0; /* Remove default margin */
+}
+
+nav ul li {
+    margin-right: 20px; /* Spacing between menu items */
+}
+
+nav ul li a {
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Dark grey text color */
+    font-weight: bold; /* Make the font bold */
+}
+
+nav ul li:last-child {
+    margin-right: 0; /* Remove margin from the last item */
+}

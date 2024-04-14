@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import usePokemonData from '../hooks/usePokemonData';
 import '../App.css';  // Ensure this import is correct
+import '../styles/PokemonPage.css'
 
 function PokemonPage() {
     const { pokemons, loading, error } = usePokemonData();

@@ -1,71 +1,25 @@
-/* Styles for the Navbar using Flexbox */
-nav {
-  background-color: #f8f8f8; /* Light grey background */
-  padding: 10px 20px; /* Padding around the navigation */
-  display: flex; /* Enable Flexbox */
-  justify-content: center; /* Center the items horizontally */
-  align-items: center; /* Align items vertically in the center */
+
+/*BackButton CSS*/
+.back-button {
+  background: none;
+  border: none;
+  color: #333; /* Adjust color to fit your app's theme */
+  font-size: 24px; /* Adjust size as needed */
+  cursor: pointer;
+  padding: 10px; /* Adjust padding as needed */
+  display: inline-block;
+  transition: color 0.3s ease;
+
+  /* Optional: Add a hover effect */
+  &:hover {
+    color: #555; /* Darken color on hover */
+  }
+
+  /* Optional: Add focus styling to improve accessibility */
+  &:focus {
+    outline: 2px solid #555; /* Add an outline on focus */
+  }
 }
-
-nav ul {
-  list-style-type: none; /* Remove default list styling */
-  padding: 0; /* Remove default padding */
-  display: flex; /* Enable Flexbox for the list */
-  margin: 0; /* Remove default margin */
-}
-
-nav ul li {
-  margin-right: 20px; /* Spacing between menu items */
-}
-
-nav ul li a {
-  text-decoration: none; /* Remove underline from links */
-  color: #333; /* Dark grey text color */
-  font-weight: bold; /* Make the font bold */
-}
-
-nav ul li:last-child {
-  margin-right: 0; /* Remove margin from the last item */
-}
-
-
-/* Styles for the 151 Pokemons/pictures*/
-.pokemon-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(202px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.pokemon-card {
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  text-align: center;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pokemon-card img {
-  width: 175px; /* Fixed width */
-  height: 202px; /* Fixed height */
-  object-fit: contain; /* Ensures the entire image is visible */
-  background-color: #f0f0f0; /* Optional: background color for empty space around the image */
-  display: block; /* Ensure image is a block element to center properly */
-  margin: auto; /* Center the image horizontally and vertically */
-}
-
-.search-container {
-  display: flex;
-  justify-content: center; /* Centers children horizontally */
-  align-items: center; /* Centers children vertically, if needed */
-  padding: 20px; /* Adds some padding around the search container */
-}
-
-
-
 
 
 

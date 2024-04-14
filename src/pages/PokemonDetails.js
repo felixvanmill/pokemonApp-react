@@ -1,52 +1,102 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import BackButton from '../components/BackButton';
-import '../App.css'; // Ensure this is correct
+import { fetchPokemonDetails } from '../services/fetchPokemons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import '../styles/PokemonDetails.css';
+import useBodyBackgroundColor from '../hooks/useBodyBackgroundColor';  // Adjust the path as necessary
+import useArrowKeyNavigation from '../hooks/useArrowKeyNavigation';  // Adjust the import path as necessary
+
+const typeColors = {
+    normal: "#A8A878",
+    fire: "#F08030",
+    water: "#6890F0",
+    electric: "#F8D030",
+    grass: "#78C850",
+    ice: "#98D8D8",
+    fighting: "#C03028",
+    poison: "#A040A0",
+    ground: "#E0C068",
+    flying: "#A890F0",
+    psychic: "#F85888",
+    bug: "#A8B820",
+    rock: "#B8A038",
+    ghost: "#705898",
+    dragon: "#7038F8",
+    dark: "#705848",
+    steel: "#B8B8D0",
+    fairy: "#FFC0CB",
+};
 
 function PokemonDetails() {
     const { pokemonId } = useParams();
+    const navigate = useNavigate();
     const [pokemonDetails, setPokemonDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function fetchPokemonDetails() {
+        async function loadPokemonDetails() {
             try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-                const data = await response.json();
-                setPokemonDetails(data);
+                const details = await fetchPokemonDetails(pokemonId);
+                setPokemonDetails(details);
             } catch (err) {
-                setError('Failed to fetch Pokémon details');
+                setError(`Failed to fetch Pokémon details: ${err.message}`);
+                console.error(err);
             } finally {
                 setLoading(false);
             }
         }
-        fetchPokemonDetails();
+        loadPokemonDetails();
     }, [pokemonId]);
+
+    const backgroundColor = pokemonDetails ? typeColors[pokemonDetails.types[0].type.name] : 'transparent';
+    useBodyBackgroundColor(backgroundColor);
+    useArrowKeyNavigation(pokemonId, navigate);  // Using the keyboard navigation hook
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            <BackButton style={{ margin: '20px', padding: '10px' }} />
+        <div className="pokemon-details-container">
             {pokemonDetails && (
-                <div>
+                <div className="pokemon-info">
+                    <BackButton />
+                    <div className="pokemon-image-container">
+                        {pokemonId > 1 && (
+                            <button onClick={() => navigate(`/pokemon/${parseInt(pokemonId, 10) - 1}`)} className="nav-button prev-button">
+                                <FontAwesomeIcon icon={faArrowLeft} />
+                            </button>
+                        )}
+                        <img src={pokemonDetails.image} alt={pokemonDetails.name} className="pokemon-image" />
+                        {pokemonId < 151 && (
+                            <button onClick={() => navigate(`/pokemon/${parseInt(pokemonId, 10) + 1}`)} className="nav-button next-button">
+                                <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
+                        )}
+                    </div>
                     <h1>{pokemonDetails.name} (#{pokemonDetails.id})</h1>
-                    <p>Height: {pokemonDetails.height}</p>
-                    <p>Weight: {pokemonDetails.weight}</p>
-                    <h2>Types</h2>
-                    <ul>
-                        {pokemonDetails.types.map((typeEntry, index) => (
-                            <li key={index}>{typeEntry.type.name}</li>
-                        ))}
-                    </ul>
-                    <h2>Abilities</h2>
-                    <ul>
-                        {pokemonDetails.abilities.map((ability, index) => (
-                            <li key={index}>{ability.ability.name}</li>
-                        ))}
-                    </ul>
+                    <p>Height: {pokemonDetails.height / 10} m</p>
+                    <p>Weight: {pokemonDetails.weight / 10} kg</p>
+                    <div className="details-flex-container">
+                        <div className="details-section">
+                            <h2>Types</h2>
+                            <ul>
+                                {pokemonDetails.types.map((type, index) => (
+                                    <li key={index}>{type.type.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="details-section">
+                            <h2>Abilities</h2>
+                            <ul>
+                                {pokemonDetails.abilities.map((ability, index) => (
+                                    <li key={index}>{ability.ability.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
                     <h2>Statistics</h2>
                     <ul>
                         {pokemonDetails.stats.map((stat, index) => (
