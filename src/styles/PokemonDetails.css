@@ -95,7 +95,7 @@ h2{
     cursor: pointer;
     top: 50%; /* Center vertically */
     font-size: 24px; /* Icon size, adjust as needed */
-    padding: 10px; /* Sufficient padding for clickable area */
+    padding: 20px; /* Sufficient padding for clickable area */
     z-index: 10; /* Ensure it's above other elements if needed */
 }
 

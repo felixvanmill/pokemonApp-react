@@ -7,6 +7,7 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import '../styles/PokemonDetails.css';
 import useBodyBackgroundColor from '../hooks/useBodyBackgroundColor';  // Adjust the path as necessary
 import useArrowKeyNavigation from '../hooks/useArrowKeyNavigation';  // Adjust the import path as necessary
+import { faArrowsAltV, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 
 const typeColors = {
     normal: "#A8A878",
@@ -62,23 +63,29 @@ function PokemonDetails() {
         <div className="pokemon-details-container">
             {pokemonDetails && (
                 <div className="pokemon-info">
-                    <BackButton />
+                    <BackButton/>
                     <div className="pokemon-image-container">
                         {pokemonId > 1 && (
-                            <button onClick={() => navigate(`/pokemon/${parseInt(pokemonId, 10) - 1}`)} className="nav-button prev-button">
-                                <FontAwesomeIcon icon={faArrowLeft} />
+                            <button onClick={() => navigate(`/pokemon/${parseInt(pokemonId, 10) - 1}`)}
+                                    className="nav-button prev-button">
+                                <FontAwesomeIcon icon={faArrowLeft}/>
                             </button>
                         )}
-                        <img src={pokemonDetails.image} alt={pokemonDetails.name} className="pokemon-image" />
+                        <img src={pokemonDetails.image} alt={pokemonDetails.name} className="pokemon-image"/>
                         {pokemonId < 151 && (
-                            <button onClick={() => navigate(`/pokemon/${parseInt(pokemonId, 10) + 1}`)} className="nav-button next-button">
-                                <FontAwesomeIcon icon={faArrowRight} />
+                            <button onClick={() => navigate(`/pokemon/${parseInt(pokemonId, 10) + 1}`)}
+                                    className="nav-button next-button">
+                                <FontAwesomeIcon icon={faArrowRight}/>
                             </button>
                         )}
                     </div>
                     <h1>{pokemonDetails.name} (#{pokemonDetails.id})</h1>
-                    <p>Height: {pokemonDetails.height / 10} m</p>
-                    <p>Weight: {pokemonDetails.weight / 10} kg</p>
+                    <div className="measurement">
+                        <FontAwesomeIcon icon={faArrowsAltV}/> <span>Height: {pokemonDetails.height / 10} m</span>
+                    </div>
+                    <div className="measurement">
+                        <FontAwesomeIcon icon={faWeightHanging}/> <span>Weight: {pokemonDetails.weight / 10} kg</span>
+                    </div>
                     <div className="details-flex-container">
                         <div className="details-section">
                             <h2>Types</h2>

@@ -1,29 +1,49 @@
-/* Styles for the Navbar using Flexbox */
-nav {
-    background-color: #f8f8f8; /* Light grey background */
-    padding: 10px 20px; /* Padding around the navigation */
-    display: flex; /* Enable Flexbox */
-    justify-content: center; /* Center the items horizontally */
-    align-items: center; /* Align items vertically in the center */
+.Navbar {
+    width: 100%;
+    height: 96px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-nav ul {
-    list-style-type: none; /* Remove default list styling */
-    padding: 0; /* Remove default padding */
-    display: flex; /* Enable Flexbox for the list */
-    margin: 0; /* Remove default margin */
+.Navigation {
+    width: 100%;
+    height: 96px;
+    background: #0075BE;
+    display: flex;  /* Using flexbox for navigation */
+    justify-content: flex-end;  /* Aligns children (Frame2) to the right */
+    position: absolute;
 }
 
-nav ul li {
-    margin-right: 20px; /* Spacing between menu items */
+.Frame2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Removing absolute positioning and using flexbox alignment */
+    padding-right: 20px; /* Padding to ensure it does not touch the very edge */
 }
 
-nav ul li a {
-    text-decoration: none; /* Remove underline from links */
-    color: #333; /* Dark grey text color */
-    font-weight: bold; /* Make the font bold */
+.NavLink {
+    display: block;
+    height: 43px;
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    text-decoration: none;
 }
 
-nav ul li:last-child {
-    margin-right: 0; /* Remove margin from the last item */
+.Line1, .Line2, .Line3 {
+    height: 40px; /* Adjusted height to fit within 96px nav height */
+    width: 1px; /* Using a more standard line width */
+    background-color: white; /* Using background color instead of border for visibility */
+    align-self: center; /* This will center the line within the flex container */
+}
+
+/* Additional hover effects for links */
+.NavLink:hover {
+    opacity: 1;  /* Full opacity on hover */
+    color: grey; /* Change text color on hover */
 }

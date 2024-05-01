@@ -7,10 +7,12 @@ const BackButton = () => {
     const navigate = useNavigate();
 
     return (
-        <button onClick={() => navigate(-1)} className="back-button" aria-label="Go back">
+        <button onClick={() => navigate('/pokemon')} className="back-button" aria-label="Go back">
             <FontAwesomeIcon icon={faArrowLeft} />
         </button>
     );
 };
 
 export default BackButton;
+
+
