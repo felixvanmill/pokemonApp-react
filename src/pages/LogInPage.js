@@ -1,6 +1,6 @@
 // src/pages/LogInPage.js
 import React, { useState } from 'react';
-import '../styles/Homepage.css';
+import '../styles/LoginPage.css';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,28 +13,41 @@ function LogInPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const [serverMessage, setServerMessage] = useState("");
-    const [serverError, setServerError] = useState("");
+    const [registerError, setRegisterError] = useState("");
+    const [registerMessage, setRegisterMessage] = useState("");
+    const [loginError, setLoginError] = useState("");
+    const [loginMessage, setLoginMessage] = useState("");
     const { login } = useAuth();
     const navigate = useNavigate();
 
     const validateEmail = (email) => {
-        const re = /^[^\s@]+@[^\s@]+$/;
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setServerMessage("");
-        setServerError("");
+        setLoginMessage("");
+        setLoginError("");
+        setRegisterMessage("");
+        setRegisterError("");
 
         if (!validateEmail(email)) {
-            setServerError("Invalid email format.");
+            if (isRegistering) {
+                setRegisterError("Invalid email format.");
+            } else {
+                setLoginError("Invalid email format.");
+            }
             return;
         }
 
         if (isRegistering) {
             // Registration Logic
+            if (password.length < 8) {
+                setPasswordError("Password must be at least 8 characters long!");
+                return;
+            }
+
             if (password !== confirmPassword) {
                 setPasswordError("Passwords do not match!");
                 return;
@@ -59,17 +72,17 @@ function LogInPage() {
                 });
 
                 if (response.ok) {
-                    setServerMessage("Registration successful!");
+                    setRegisterMessage("Registration successful!");
                     login(email);
                     navigate('/');
                 } else if (response.status === 409) {
-                    setServerError("User already exists.");
+                    setRegisterError("User already exists.");
                 } else {
                     const errorData = await response.json();
-                    setServerError(`Registration failed: ${errorData.message || 'Unknown error'}.`);
+                    setRegisterError(`Registration failed: ${errorData.message || 'Unknown error'}.`);
                 }
             } catch (error) {
-                setServerError("An error occurred during registration.");
+                setRegisterError("An error occurred during registration.");
             }
 
         } else {
@@ -91,21 +104,27 @@ function LogInPage() {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setServerMessage("Login successful!");
+                    setLoginMessage("Login successful!");
                     login(email);
                     navigate('/');
                     console.log("JWT Token:", data.token);
+                } else if (response.status === 401) {
+                    setLoginError("Invalid password.");
                 } else {
                     const errorData = await response.json();
-                    setServerError(`Login failed: ${errorData.message || 'Unknown error'}.`);
+                    setLoginError(`Login failed: ${errorData.message || 'Unknown error'}.`);
                 }
             } catch (error) {
-                setServerError("An error occurred during login.");
+                setLoginError("An error occurred during login.");
             }
         }
     };
 
-    const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        setPasswordError("");
+    };
+
     const handleConfirmPasswordChange = (e) => {
         setConfirmPassword(e.target.value);
         setPasswordError(password !== e.target.value ? "Passwords do not match!" : "");
@@ -117,8 +136,10 @@ function LogInPage() {
         setPassword("");
         setConfirmPassword("");
         setPasswordError("");
-        setServerMessage("");
-        setServerError("");
+        setLoginMessage("");
+        setLoginError("");
+        setRegisterMessage("");
+        setRegisterError("");
     };
 
     return (
@@ -127,49 +148,58 @@ function LogInPage() {
                 <div style={{ width: "200%", position: "relative" }}>
                     <form onSubmit={handleSubmit} className={`Frame3 ${isRegistering ? 'hiddenForm' : 'visibleForm'}`}>
                         <div className="Emailframe">
-                            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
+                            <input type="email" id="email" name="email" value={email}
+                                   onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required/>
                         </div>
                         <div className="Passwordframe">
-                            <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} placeholder="Enter your password" required />
+                            <input type="password" id="password" name="password" value={password}
+                                   onChange={handlePasswordChange} placeholder="Enter your password" required/>
                         </div>
-                        <div className="LoginButton">
-                            <button type="submit">Login</button>
+                        <div className="LogInErrorContainer">
+                            {loginError && <p className="server-message error">{loginError}</p>}
+                            {loginMessage && <p className="server-message">{loginMessage}</p>}
                         </div>
-                        <div className="RegisterToggle">
-                            <button type="button" onClick={toggleForm}>
-                                New here? Register!
-                            </button>
-                        </div>
+                            <div className="LoginButton">
+                                <button type="submit">Login</button>
+                            </div>
+                            <div className="RegisterToggle">
+                                <button type="button" onClick={toggleForm}>
+                                    New here? Register!
+                                </button>
+                            </div>
                     </form>
 
                     <form onSubmit={handleSubmit} className={`Frame3 ${isRegistering ? 'visibleForm' : 'hiddenForm'}`}>
                         <div className="Emailframe">
-                            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
+                            <input type="email" id="email" name="email" value={email}
+                                   onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required/>
                         </div>
-                        <div class="Passwordframe">
-                            <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} placeholder="Enter your password" required />
+                        <div className="Passwordframe">
+                            <input type="password" id="password" name="password" value={password}
+                                   onChange={handlePasswordChange} placeholder="Enter your password" required/>
                         </div>
-                        <div class="Passwordframe">
-                            <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder="Confirm your password" required />
+                        <div className="Passwordframe">
+                            <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword}
+                                   onChange={handleConfirmPasswordChange} placeholder="Confirm your password" required/>
                         </div>
-                        {passwordError && <p class="password-error">{passwordError}</p>}
-                        <div class="LoginButton">
-                            <button type="submit">Register</button>
+                        <div className="RegisterErrorContainer">
+                            {passwordError && <p className="password-error">{passwordError}</p>}
+                            {registerError && <p className="server-message error">{registerError}</p>}
+                            {registerMessage && <p className="server-message">{registerMessage}</p>}
                         </div>
-                        <div class="RegisterToggle">
-                            <button type="button" onClick={toggleForm}>
-                                Go to Login
-                            </button>
-                        </div>
+                            <div className="LoginButton">
+                                <button type="submit">Register</button>
+                            </div>
+                            <div className="RegisterToggle">
+                                <button type="button" onClick={toggleForm}>
+                                    Go to Login
+                                </button>
+                            </div>
                     </form>
-
-                    {/* Display Server Message */}
-                    {serverMessage && <p class="server-message">{serverMessage}</p>}
-                    {serverError && <p class="server-message error">{serverError}</p>}
                 </div>
             </div>
-            <div class="PokemonLogoBox">
-                <img class="PokemonLogo" src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg" alt="Pokemon Logo" />
+            <div className="PokemonLogoBox">
+                <img className="PokemonLogo" src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg" alt="Pokemon Logo" />
             </div>
         </div>
     );

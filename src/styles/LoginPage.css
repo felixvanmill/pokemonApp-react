@@ -18,9 +18,10 @@
     position: relative;
 }
 
-.Emailframe, .Passwordframe {
-    margin-top: 10px;
-    margin-bottom: 5px;
+.Emailframe,
+.Passwordframe,
+.LoginButton,
+.RegisterToggle {
     display: flex;
     width: 90%;
     justify-content: center;
@@ -44,8 +45,8 @@
 input {
     height: 50px;
     text-align: center;
-    width: 80%;
-    margin: 10px;
+    width: 60%;
+    margin-top: 10px;
     font-size: 16px;
     border-radius: 30px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -64,6 +65,7 @@ button {
     border-radius: 60px;
     border: 0px;
     font-size: 22px;
+    margin-bottom: 10px;
 }
 
 .PokemonLogoBox {
@@ -81,37 +83,12 @@ button {
     display: block;
 }
 
-.LoginButton {
-    justify-content: center;
-    display: flex;
-    width: 90%;
-    margin-bottom: 15px;
-}
-
-.RegisterToggle {
-    display: flex;
-    width: 60%;
-    text-align: center;
-    margin-top: 10px;
-    justify-content: center;
-}
-
-.RegisterToggle button {
-    width: 200px;
-    background-color: #f8f8f8;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    border-radius: 60px;
-    margin-bottom: 20px;
-}
-
 .password-error,
 .server-message {
     font-size: 0.8em;
     margin-top: 5px;
     text-align: center;
     width: 90%;
-    animation: fadeOut 3s forwards; /* Fade out after 3 seconds */
 }
 
 .password-error {
@@ -119,11 +96,11 @@ button {
 }
 
 .server-message {
-    color: green; /* Default to green for success */
+    color: green;
 }
 
 .server-message.error {
-    color: red; /* Red for failure */
+    color: red;
 }
 
 .hiddenForm {
@@ -144,3 +121,26 @@ button {
         opacity: 0;
     }
 }
+
+.LogInErrorContainer{
+    display: flex;
+    height: 25px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+}
+
+.RegisterErrorContainer{
+    display: flex;
+    height: 25px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+}
+
+.Passwordframe{
+    margin-bottom: 0px;
+}
+
