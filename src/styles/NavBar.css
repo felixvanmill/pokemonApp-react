@@ -10,16 +10,15 @@
     width: 100%;
     height: 50px;
     background: #0075BE;
-    display: flex;  /* Using flexbox for navigation */
-    justify-content: flex-end;  /* Aligns children (Frame2) to the right */
+    display: flex;
+    justify-content: flex-end;
 }
 
 .Frame2 {
     display: flex;
     align-items: center;
     gap: 10px;
-    /* Removing absolute positioning and using flexbox alignment */
-    padding-right: 20px; /* Padding to ensure it does not touch the very edge */
+    padding-right: 20px;
 }
 
 .NavLink {
@@ -34,14 +33,41 @@
 }
 
 .Line1, .Line2, .Line3 {
-    height: 40px; /* Adjusted height to fit within 96px nav height */
-    width: 1px; /* Using a more standard line width */
-    background-color: white; /* Using background color instead of border for visibility */
-    align-self: center; /* This will center the line within the flex container */
+    height: 40px;
+    width: 1px;
+    background-color: white;
+    align-self: center;
 }
 
-/* Additional hover effects for links */
 .NavLink:hover {
-    opacity: 1;  /* Full opacity on hover */
-    color: grey; /* Change text color on hover */
+    color: grey;
+}
+
+.Account {
+    position: relative;
+    display: inline-block;
+}
+
+.Dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.DropdownItem {
+    padding: 10px 20px;
+    text-align: left;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.DropdownItem:hover {
+    background-color: #f0f0f0;
+    color: grey;
 }

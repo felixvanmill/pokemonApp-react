@@ -1,4 +1,4 @@
-*{
+* {
     font-family: 'Jost', sans-serif;
 }
 
@@ -7,33 +7,24 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-
-
 }
 
 .Loginframe {
     display: flex;
     justify-content: center;
-    min-width: 600px;
+    min-width: 550px;
     width: 40%;
-    max-width: 600px;
+    max-width: 550px;
+    position: relative;
 }
 
-.Emailframe {
-    margin-top: 35px;
+.Emailframe, .Passwordframe {
+    margin-top: 10px;
     margin-bottom: 5px;
     display: flex;
     width: 90%;
     justify-content: center;
 }
-
-.Passwordframe{
-    display: flex;
-    width: 90%;
-    justify-content: center;
-    margin-bottom: 5px;
-}
-
 
 .Frame3 {
     background: #D9D9D9;
@@ -50,24 +41,23 @@
     top: 0;
 }
 
-
 input {
     height: 50px;
     text-align: center;
     width: 80%;
     margin: 10px;
-    font-size: 16px; /* Readable font size */
-    border-radius: 30px; /* Aesthetic border-radius */
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset; /* Stylish inner shadow */
-    border: none; /* Cleaner look by removing border */
-    outline: none; /* Remove outline to control focus styles separately */
+    font-size: 16px;
+    border-radius: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+    border: none;
+    outline: none;
 }
 
 input:focus {
-    box-shadow: 0 4px 6px rgba(0, 100, 0, 0.25) inset; /* Change shadow on focus for visibility */
+    box-shadow: 0 4px 6px rgba(0, 100, 0, 0.25) inset;
 }
 
-button{
+button {
     width: 200px;
     background: #83BA36;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -76,22 +66,22 @@ button{
     font-size: 22px;
 }
 
-.PokemonLogoBox{
+.PokemonLogoBox {
     display: flex;
-    max-width: 782px; /* Maximum width of the logo to maintain aspect ratio */
-    margin: auto; /* Centers the container if it's smaller than its parent */
+    max-width: 782px;
+    margin: auto;
     justify-content: center;
     align-items: center;
     width: 70%;
 }
 
 .PokemonLogo {
-    width: 100%; /* Makes the image responsive by allowing it to grow and shrink */
-    height: auto; /* Maintains the aspect ratio */
-    display: block; /* Removes extra space below the image */
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
-.LoginButton{
+.LoginButton {
     justify-content: center;
     display: flex;
     width: 90%;
@@ -115,10 +105,25 @@ button{
     margin-bottom: 20px;
 }
 
-.password-error {
-    color: red;
+.password-error,
+.server-message {
     font-size: 0.8em;
     margin-top: 5px;
+    text-align: center;
+    width: 90%;
+    animation: fadeOut 3s forwards; /* Fade out after 3 seconds */
+}
+
+.password-error {
+    color: red;
+}
+
+.server-message {
+    color: green; /* Default to green for success */
+}
+
+.server-message.error {
+    color: red; /* Red for failure */
 }
 
 .hiddenForm {
@@ -129,4 +134,13 @@ button{
 .visibleForm {
     transform: translateX(0);
     opacity: 1;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

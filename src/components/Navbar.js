@@ -1,8 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/NavBar.css'; // Ensure your CSS path is correct
+// src/components/Navbar.js
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import '../styles/NavBar.css';
 
 const Navbar = () => {
+    const { userEmail, isAuthenticated, logout } = useAuth();
+    const [accountDropdown, setAccountDropdown] = useState(false);
+    const navigate = useNavigate();
+
+    const handleMouseEnter = () => setAccountDropdown(true);
+    const handleMouseLeave = () => setAccountDropdown(false);
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+    const handleLogin = () => {
+        navigate('/login');
+    };
+
+    const accountLabel = isAuthenticated ? `Account (${userEmail})` : "Login";
+
     return (
         <div className="Navbar">
             <div className="Navigation">
@@ -13,7 +31,21 @@ const Navbar = () => {
                     <div className="Line2"></div>
                     <div className="Items"><Link to="/items" className="NavLink">Items</Link></div>
                     <div className="Line3"></div>
-                    <div className="Account"><Link to="/account" className="NavLink">Account</Link></div>
+
+                    <div
+                        className="Account"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <span className="NavLink" onClick={isAuthenticated ? null : handleLogin}>{accountLabel}</span>
+                        {accountDropdown && isAuthenticated && (
+                            <div className="Dropdown">
+                                <Link to="/account/profile" className="DropdownItem">Profile</Link>
+                                <Link to="/account/mypokemon" className="DropdownItem">My Pokémon</Link>
+                                <span className="DropdownItem" onClick={handleLogout}>Log Off</span>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
